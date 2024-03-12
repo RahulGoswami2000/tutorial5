@@ -5,11 +5,11 @@ app.use(express.json());
 let users = [];
 
 app.post('/add', (req, res) => {
-     const { name, email } = req.body;
-     if (!name || !email) {
+     const { firstName, email } = req.body;
+     if (!firstName || !email) {
          return res.status(400).json({ error: "Name and email are required" });
      }
-     const newUser = { id: users.length + 1, name, email };
+     const newUser = { id: users.length + 1, firstName, email };
      users.push(newUser);
      res.status(201).json({ message: "User added", success: true });
  });
@@ -21,13 +21,13 @@ app.post('/add', (req, res) => {
 
  app.put('/update/:id', (req, res) => {
      const userId = parseInt(req.params.id);
-     const { name, email } = req.body;
+     const { firstName, email } = req.body;
      const userIndex = users.findIndex(user => user.id === userId);
      if (userIndex === -1) {
          return res.status(404).json({ error: "User not found" });
      }
 
-     users[userIndex].name = name;
+     users[userIndex].firstName = firstName;
      users[userIndex].email = email;
  
      res.status(200).json({ message: "User updated", success: true });
